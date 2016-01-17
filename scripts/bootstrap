@@ -2,7 +2,7 @@
 
 rm -rf flowtyped-zoo
 git clone git@github.com:justinwoo/flowtyped-zoo.git flowtyped-zoo &&
-cp flowtyped-zoo/.flowconfig . &&
+cp flowtyped-zoo/dotfiles/.flowconfig . &&
 mkdir -p interfaces &&
 cp flowtyped-zoo/interfaces/* interfaces &&
 rm -rf flowtyped-zoo

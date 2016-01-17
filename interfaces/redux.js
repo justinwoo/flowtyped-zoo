@@ -1,11 +1,11 @@
-type redux$Reducer<T> = (state: T, action: any) => T;
+type redux$Reducer<T, R> = (state: T, action: R) => T;
 
-interface redux$Store<T> {
-  subscribe(observer: () => any): void;
-  dispatch(action: any): void;
+interface redux$Store<T, R> {
+  subscribe(observer: () => void): void;
+  dispatch(action: R): void;
   getState(): T;
 };
 
 declare module 'redux' {
-  declare function createStore<T>(reducer: redux$Reducer<T>): redux$Store;
+  declare function createStore<T, R>(reducer: redux$Reducer<T, R>): redux$Store<T, R>;
 }
