@@ -5,18 +5,31 @@ const {createStore} = require('redux');
 describe('redux', () => {
   it('has a createStore that works', (done) => {
     type State = {
-      something: 1232
+      something: number
     };
     type Action = {
       type: 'action1',
       payload: {
-        something: string
+        something: number
       }
     } | {
       type: 'action2',
-      something: string
+      payload: number
     };
-    const reducer = (a: State, b: Action) => a;
+    const reducer = (a: State, b: Action) => {
+      switch (b.type) {
+        case 'action1':
+          return {
+            something: b.payload.something
+          };
+        case 'action2':
+          return {
+            something: b.payload
+          };
+        default:
+          return a;
+      }
+    };
     const store = createStore(reducer);
 
     store.subscribe(function () {
@@ -27,13 +40,13 @@ describe('redux', () => {
     store.dispatch({
       type: 'action1',
       payload: {
-        something: 'asad'
+        something: 123
       }
     });
 
     store.dispatch({
       type: 'action2',
-      something: 'string'
+      payload: 123
     })
   });
 });
