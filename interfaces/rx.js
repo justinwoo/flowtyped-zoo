@@ -1,11 +1,14 @@
 declare module 'rx' {
   declare class Observable<T> {
+    static from(array: T[]): Observable<T>;
     static merge<R>(...sources: Observable<R>[]): Observable<R>;
 
+    do(f: (item: T) => any): Observable<T>;
     map<R>(f: (item: T) => R): Observable<R>;
-
     scan<R>(f: (prev: R, next: T) => R): Observable<R>;
-    startWith<R>(init: R): Observable<T>;
+    skip(count: number): Observable<T>;
+    startWith<R>(init: R): Observable<R>;
+    take(count: number): Observable<T>;
 
     subscribe(
       next: (item: T) => any,
