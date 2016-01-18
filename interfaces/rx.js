@@ -7,7 +7,7 @@ declare module 'rx' {
     map<R>(f: (item: T) => R): Observable<R>;
     scan<R>(f: (prev: R, next: T) => R): Observable<R>;
     skip(count: number): Observable<T>;
-    startWith<R>(init: R): Observable<R>;
+    startWith(init: any): Observable<T>;
     take(count: number): Observable<T>;
 
     subscribe(

@@ -31,21 +31,24 @@ describe('rx', () => {
       .map(x => x / 2)
       .subscribe(simpleObserver);
     subject.scan((a, b) => 'some other type')
-      .map(x => {
-        return x.replace('some', 'Some');
-      })
+      .map(x => x.replace('some', 'Some'))
       .subscribe(simpleObserver);
   });
   it('has startWith', () => {
     subject.startWith(123)
       .map(x => x / 2)
       .subscribe(simpleObserver);
-    subject.startWith('some other type')
-      .take(1)
+
+    subject.startWith('something')
+      .scan((a: string, b: number) => a)
       .map(x => x.replace('some', 'Some'))
       .subscribe(simpleObserver);
 
     // i think these lines are impossible to type reasonably:
+    // subject.startWith('some other type')
+    //   .take(1)
+    //   .map(x => x.replace('some', 'Some'))
+    //   .subscribe(simpleObserver);
     // subject.startWith('some other type')
     //   .skip(1)
     //   .map(x => x / 2)
