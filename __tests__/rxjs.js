@@ -1,15 +1,15 @@
 /* @flow */
 
-const Rx = require('rx');
+const Rx = require('rxjs');
 
 const subject: Rx.Subject<number> = new Rx.Subject();
 const simpleObserver = x => null;
 
-subject.onNext(1);
-subject.onNext(2);
-subject.onNext(3);
+subject.next(1);
+subject.next(2);
+subject.next(3);
 
-describe('rx', () => {
+describe('rxjs', () => {
   it('has from', () => {
     Rx.Observable.from([1, 2, 3])
       .subscribe(simpleObserver);

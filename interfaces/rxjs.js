@@ -1,4 +1,4 @@
-declare module 'rx' {
+declare module 'rxjs' {
   declare interface ArrayLike<T> {
     length: number;
     [index: number]: T;
@@ -19,12 +19,17 @@ declare module 'rx' {
       next: (item: T) => any,
       error?: (error: any) => any,
       complete?: (item: T) => any
-    ): {
-      unsubscribe: () => void;
-    };
+    ): Subscription;
+  }
+
+  declare class Subscription {
+    isUnsubscribed: boolean;
+    unsubscribe: () => void;
   }
 
   declare class Subject<T> extends Observable<T> {
-    onNext(item: T): void;
+    next(item: T): void;
+    error(err: any): void;
+    complete(): void;
   }
 }
