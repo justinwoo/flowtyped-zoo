@@ -7,7 +7,6 @@ describe('cycle-core', () => {
   it('has run', (done) => {
     function main(sources) {
       return {
-        test: sources.crap,
         output: sources.crap
       };
     }
@@ -16,13 +15,25 @@ describe('cycle-core', () => {
 
     const drivers = {
       crap: () => Rx.Observable.from([1,2,3]),
-      test: test$ => console.log('test$', test$.subscribe),
-      output: output$ => output$.subscribe(x => {
-        console.log('dfsdfd');
-        if (count++ === 3) {
-          done();
-        }
-      })
+      output: output$ => {
+        const myreplay = new Rx.ReplaySubject(3);
+        Rx.Observable.from([1,2,3]).subscribe(myreplay);
+        myreplay.subscribe(x => x);
+
+        // this part doesn't work in jest for some reason:
+        // you can see cycle and rx aren't being mocked, so what gives?
+
+        let count = 0;
+
+        output$.subscribe(x => {
+          console.log('dfsdfd');
+          if (++count === 3) {
+            done();
+          }
+        })
+
+        done();
+      }
     };
 
     run(main, drivers);

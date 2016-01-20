@@ -7,6 +7,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@cycle/core": "^6.0.0",
     "babel": "^6.3.26",
     "babel-core": "^6.3.26",
     "babel-jest": "^6.0.1",

@@ -16,9 +16,9 @@ declare module 'rx' {
     take(count: number): Observable<T>;
 
     subscribe(
-      next: (item: T) => any,
-      error?: (error: any) => any,
-      complete?: (item: T) => any
+      onNextOrSubject: ((item: T) => any) | Subject,
+      onError?: (error: any) => any,
+      Complete?: (item: T) => any
     ): {
       unsubscribe: () => void;
     };
@@ -27,4 +27,6 @@ declare module 'rx' {
   declare class Subject<T> extends Observable<T> {
     onNext(item: T): void;
   }
+
+  declare class ReplaySubject<T> extends Subject<T> {}
 }
