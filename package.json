@@ -25,6 +25,7 @@
     "scriptPreprocessor": "<rootDir>/jest/preprocessor.js",
     "testRunner": "<rootDir>/node_modules/jest-cli/src/testRunners/jasmine/jasmine2.js",
     "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/@cycle",
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/redux",
       "<rootDir>/node_modules/rx",
