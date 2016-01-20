@@ -1,6 +1,7 @@
 [ignore]
 build
 .*/node_modules/.*
+.*/node_modules/@cycle*
 .*/node_modules/redux/.*
 .*/node_modules/rx/.*
 .*/node_modules/rxjs/.*
