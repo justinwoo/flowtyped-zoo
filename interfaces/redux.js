@@ -7,5 +7,5 @@ declare module 'redux' {
     getState(): T;
   }
 
-  declare function createStore<T, R>(reducer: Reducer<T, R>): Store<T, R>;
+  declare function createStore<T, R>(reducer: Reducer<T, R>, init: T): Store<T, R>;
 }

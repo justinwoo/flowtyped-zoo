@@ -30,11 +30,16 @@ describe('redux', () => {
           return a;
       }
     };
-    const store = createStore(reducer);
+    const store = createStore(reducer, {something: 3});
+
+    let count = 0;
 
     store.subscribe(function () {
       const state: State = store.getState();
-      done();
+
+      if (++count >= 2  ) {
+        done();
+      }
     });
 
     store.dispatch({
