@@ -1,12 +1,29 @@
+import Rx from 'rx';
+
+interface rx$ArrayLike<T> {
+  length: number;
+  [index: number]: T;
+}
+
+interface rx$Observer<T> {
+  onNext: (item: T) => void;
+  onError: (err: any) => void;
+  onCompleted: () => void;
+}
+
+type rx$Subscription = Rx.Disposable & {
+  unsubscribe: () => void;
+}
+
+type rx$DisposeFunction = () => void;
+
 declare module 'rx' {
-  declare interface ArrayLike<T> {
-    length: number;
-    [index: number]: T;
-  }
 
   declare class Observable<T> {
-    static from(array: T[] | ArrayLike<T>): Observable<T>;
+    static empty(): Observable<T>;
+    static from(array: T[] | rx$ArrayLike<T>): Observable<T>;
     static merge<R>(...sources: Observable<R>[]): Observable<R>;
+    static create(constructor: ((observer: rx$Observer<T>) => rx$DisposeFunction)): Observable<T>;
 
     do(f: (item: T) => any): Observable<T>;
     map<R>(f: (item: T) => R): Observable<R>;
@@ -16,17 +33,26 @@ declare module 'rx' {
     take(count: number): Observable<T>;
 
     subscribe(
-      onNextOrSubject: ((item: T) => any) | Subject,
+      onNextOrSubject?: ((item: T) => any) | Subject,
       onError?: (error: any) => any,
       Complete?: (item: T) => any
-    ): {
-      unsubscribe: () => void;
-    };
+    ): rx$Subscription;
+  }
+
+  declare class Disposable {
+    static create: () => Disposable;
+    dispose: () => void;
+  }
+
+  declare class CompositeDisposable extends Disposable {
+    add(item: Disposable): void;
   }
 
   declare class Subject<T> extends Observable<T> {
     onNext(item: T): void;
   }
 
-  declare class ReplaySubject<T> extends Subject<T> {}
+  declare class ReplaySubject<T> extends Subject<T> {
+    constructor(count: number): Observable<T>;
+  }
 }
