@@ -5,7 +5,7 @@ interface rx$ArrayLike<T> {
   [index: number]: T;
 }
 
-interface rx$Observer<T> {
+class rx$Observer<T> {
   onNext: (item: T) => void;
   onError: (err: any) => void;
   onCompleted: () => void;
@@ -48,7 +48,7 @@ declare module 'rx' {
     add(item: Disposable): void;
   }
 
-  declare class Subject<T> extends Observable<T> {
+  declare class Subject<T> mixins Observable<T>, rx$Observer<T> {
     onNext(item: T): void;
   }
 
